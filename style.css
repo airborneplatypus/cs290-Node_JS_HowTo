@@ -1,0 +1,40 @@
+#navBar{
+	position: fixed;
+	width: 100%;
+	left: 0;
+	top: 0;
+	text-align: center;
+	background-color: 444444;
+}
+
+nav{
+	margin: auto;
+	text-align: center;
+}
+
+#navTable{
+	margin: auto;
+	text-align: center;
+	font-size: 1.2em;
+}
+
+.navTD:hover{
+	background-color: 777777;
+}
+.navTD{
+	width: 170px;
+}
+
+a{
+	display: block;
+}
+
+a:link{
+	color: ffffff;
+	text-decoration: none;
+}
+
+a:visited{
+	color: ffffff;
+	text-decoration: none;
+}
