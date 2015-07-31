@@ -11,9 +11,9 @@
 				<table id="navTable">
 					<tr>
 						<td class="navTD"><a href="#WhatIS">What Is Node.js?</a></td>
-						<td class="navTD"><a href="#Why">Why</a></td>
-						<td class="navTD"><a href="#IDE">IDE</a></td>
-						<td class="navTD"><a href="#Linux">Linux</a></td>
+						<td class="navTD"><a href="#Why">Why use Node.js?</a></td>
+						<td class="navTD"><a href="#IDE">IDE Setup</a></td>
+						<td class="navTD"><a href="#Linux">Linux Setup</a></td>
 						<td class="navTD"><a href="#Routing">Routing</a></td>
 					</tr>
 				</table>
@@ -55,20 +55,6 @@
 		<article id="IDE">
 			<br>
 			<h2>IDE</h2>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
 
 		</article>
 
@@ -101,35 +87,48 @@ var server=app.listen(3000,function(){
 	console.log("Express is running on port 3000");
 });
 			</pre>
-			<p>What to include in the main.js will be covered in the next section <b>Routing</b>, but for now, assume that is has been finished.  In order to start your server, simply run the command "node server.js".  To test this, use your browser to navigate to "localhost:3000".
+			<p>What to include in the main.js will be covered in the next section <b>Routing</b>, but for now, assume that is has been finished.  In order to start your server, simply run the command "node server.js".  To test this, use your browser to navigate to "localhost:3000".</p>
 		</article>
 
 		<article id="Routing">
 			<br>
 			<h2>Routing</h2>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
+			<p>One major difference between Node.js and an Apache server is that a Node.js server does not automatically handle the routing for you.  Instead, you have to handle all of the request for files yourself.  One thing to note is that nearly every request for file by URL is in fact a GET request.</p>
+			<p>First we must require express for HTML handling and bodyParser to allow us to parse POST requests.</p>
+			<p>The general format for parsing is appname.method("where_request_was_directed", function(request,response){
+				Stuff to do.
+			}).</p>
+			<xmp class="prettyprint linenums">
+var express=require('express');
+var bodyParser = require('body-parser');
+module.exports=function(app)
+{
+	app.use(bodyParser.urlencoded({
+		extended: true
+	}));
+	app.post('/', function(request, response){
+		var name = request.body.user_name;
+		var password = request.body.user_password;
+		console.log(name);
+		console.log(password);
+		response.writeHead(200, {'content-type':'text/html'});
+		response.write("<center>");
+		response.write("Hello " + name);
+		response.write("<br><a href=\"/content1\">content1</a>");
+		response.write("</center>");
+		response.end();
+	});
+	app.get('/content1',function(request,response){
+		response.render('content1.html');
+	})
+	app.get('/', function(request,response){
+		response.render('index.html');
+	})
+}
+			</xmp>
+			<p>One thing to note in the post function is how we send a response.  We start with response.writeHead(status,{what_should_included_in_header}).  Typically you'll want to respond with a status of 200 and the header should at least specify the content-type.  The content-type can be anything from plaintext, to in-line HTML, to entire JavaScript and CSS files.  After you are done writing content to send, you will finish with response.end();</p>
+			<p>For standard page navigation, express and ejs give us an easy way to display pages simply by using response.render(location_of_file_relative_to_views_directory);</p>
 		</article>
 		<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
-		<!--<h2>How to create a local server</h2>
-
-		<ul>
-			<li>install ... //forgot what the program was called</li>
-			<li>open the text editor</li>
-			<li>Check the file in the repo called "CreateLocalServer" for the code</li>
-		</ul>  
-		-->
 	</body>
 </html>
