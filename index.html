@@ -75,20 +75,33 @@
 		<article id="Linux">
 			<br>
 			<h2>Linux</h2>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
-			filler<br>
+			<p>The first thing you will need to do is install Node.js, npm, and express from your local repositories.</p>
+			<p>After that you will have to create a package.json file.  It's purpose is to let Node.js what you are currently setting up.  The most important part is the dependencies.  They are provided in the format "dependancy" : "verion" where version can be "*" in order to grab whatever version is available.  After creating a package.json, you then run the command "npm install" to install all of those dependancies.  A basic package.json will look something like this:</p>
+			<pre class="prettyprint linenums">
+{
+	"name": "Express-web-app",
+	"version": "1.0.0",
+	"dependencies":
+	{
+		"express": "~4.0.0",
+		"ejs": "~1.0.0",
+		"body-parser": "*"
+	}
+}
+			</pre>
+			<p>In this example we will be separating the server from the app for sake of modularity.  Inside of "server.js" we have to load express by using the "require" keyword.  Express is a library that makes it easier to handle full html pages with Node.js.  We then declare our app to be of the express type and load the app "main.js" using require.  Then, in line 4, we specify the "view" directory, which in this case is "/myHTML".  This tells the app to look for html pages in that directory.  Lines 5 and 6 set up "ejs" which is a library that helps us render the html.  Finallys, we tell the app to listen to port 3000.  Typically you would want to host on the standard port 80, however that requires root permissions on most machines.</p>
+			<pre class="prettyprint linenums">
+var express=require('express');
+var app=express();
+require('./main.js')(app);
+app.set('views',__dirname + '/myHTML');
+app.set('views engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+var server=app.listen(3000,function(){
+	console.log("Express is running on port 3000");
+});
+			</pre>
+			<p>What to include in the main.js will be covered in the next section <b>Routing</b>, but for now, assume that is has been finished.  In order to start your server, simply run the command "node server.js".  To test this, use your browser to navigate to "localhost:3000".
 		</article>
 
 		<article id="Routing">
@@ -109,7 +122,7 @@
 			filler<br>
 			filler<br>
 		</article>
-			
+		<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 		<!--<h2>How to create a local server</h2>
 
 		<ul>
