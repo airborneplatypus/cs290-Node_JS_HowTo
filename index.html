@@ -27,35 +27,83 @@
 			<h2>What is NodeJs?</h2>
 
 			<ul>
-				<li>1</li>
-				<li>2</li>
-				<li>3</li>
+				<li>Node.js is a way you can make clean efficient server side applications</li>
+				<li>It is javascipt that can run on your server</li>
+				<li>Used to make applications that can handle multiple requests from users like
+					<ul><li>Instant messaging apps</li>
+					<li>Social media sites</li>
+					<li>Games</li></ul>
+				</li>
 			</ul>  
 		</article>
 		
 		<article id="Why">
 			<br>
-			<h2>What are some pros of using NodeJS</h2>
+			<h2>Using NodeJS</h2>
 
 			<ul>
-				<li>1</li>
-				<li>2</li>
-				<li>3</li>
+				<li>Same syntax to javascript with objects function attributes and variables</li>
+				<li>Remember that Node.js will be running on your server continuously</li>
+				<li>Node.js has many built in functions that leverage the power of it's approach</li>
 			</ul>  
 		
 			<h2>Why choose NodeJS over PHP</h2>
 
 			<ul>
-				<li>1</li>
-				<li>2</li>
-				<li>3</li>
+				<li>In some cases PHP can be slower and use more resources</li>
+				<li>Node.js is fast, efficient and updates in real time</li>
+				<li>Node.js will handle multiple requests from one user while still executing script</li>
 			</ul>
 		</article>
 
 		<article id="IDE">
 			<br>
 			<h2>IDE</h2>
+			<p>Setting up your server with an IDE like WebStorm or IntelliJ can be very simple.</p>
+			<p>Fist you need to make sure that the Node.js is installed and your IDE knows how to handle it. Most modern IDE will be equipped with Node.js, but sometimes you will need to configure your IDE manually. After that configure your IDE so it knows what port to use on your server. Once you have done that it is only a few lines of code to get your server running.</p>
+			<pre class="prettyprint linenums">
+var http = require ('http');
 
+function onRequest (request, repsonse){
+	
+	console.log("A user made a request" + request.url);
+	repsonse.writeHead(200,{"Context-Type":"text/plain"});
+	response.write("Some Data");
+	response.end();
+}
+
+http.createServer(onRequest).listen(8888);
+conlsole.log("Server is running...");
+			</pre>
+			<p>In this example we are using a local host port 8888. To display this in your browser, just go to your browser and type in "localhost:8888". If you see a webpage that prints "Some Data" in the top left corner, your server is running correctly.</p>
+			<p>Now if you want to send the user some html you will have to modify the file slightly. First make sure you have an html file stored with your Node.js file. Mine is called layout.html. Then use this code to display it to the user.</p>
+			<pre class="prettyprint linenums">
+var http = require('http');
+var fs = require('fs');
+
+//404 response
+function send404Response(response){
+    response.writeHead(404,{"Context-Type": "text/plain"});
+    response.write("Error 404: Page not found!");
+    response.end();
+}
+
+//Handle user request
+function onRequest(request, response){
+    if(request.method == 'GET' && request.url == '/' || request.url == '/layout.html'){
+        response.writeHead(200,{"Context-Type": "text/html"});
+        fs.createReadStream("./layout.html").pipe(response);
+    }
+    else{
+        send404Response(response);
+    }
+}
+
+
+http.createServer(onRequest).listen(8888);
+console.log("Server is now running....");
+			</pre>
+			<p>The 404 repsonse we added in case the user entered a page that didn't exist on our server.</p> 
 		</article>
 
 		<article id="Linux">
